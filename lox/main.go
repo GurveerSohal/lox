@@ -1,7 +1,10 @@
 package main
 
-import "fmt"
-import "os"
+import (
+	"fmt"
+	"io"
+	"os"
+)
 
 func check(e error) {
 	if e != nil {
@@ -19,7 +22,13 @@ func main() {
 		for {
 			var input string
 			fmt.Print("> ")
-			fmt.Scan(&input)
+			_, err := fmt.Scan(&input)
+			if err == io.EOF {
+				fmt.Println("\nExiting")
+				break
+			} else if err != nil {
+				panic(err)
+			}
 			fmt.Println(input)
 		}
 	} else {
